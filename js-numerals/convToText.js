@@ -73,20 +73,61 @@ const threeDigits = function (num = 0) {
 }
 
 
+const millionPart = function (num) {
+  // can be negative?
+  return ""
+}
+
 
 const convToText = function (num) {
   // here we will check for bad parameter:
   // is it a number? too big? infinity, -infinity, NaN?
   // negative?
   if (typeof num !== 'number' || num === Infinity || num === -Infinity || num !== num) return
-
-  let text = ""
-
   // using Math.abs() and "negative " to handle negative numbers
+  let text = ""
   if (num < 0) text = "negative "
+  let myNum = Math.floor(Math.abs(num))
 
-  return text + threeDigits(Math.abs(num))
+  // handle the part above million:
+  text += millionPart(myNum)
+  myNum = myNum % 1000000
+
+  // so, we need to handle special case, when there can be "twenty-one hundred..."
+  // this happens when the number is (places: 654321)
+  // 43 == >10
+  // 65 == 00  --- as the number is less than a million, -> myNum < 10.000
+  //  4 != 0
+  //  3 != 0
+  // okay, lets do it the dirty way first
+
+  if (myNum % 10000 > 1000
+    && (myNum < 10000)
+    && Math.floor((myNum % 1000) / 100) != 0
+    && Math.floor((myNum % 100) / 10) != 0) {
+
+    // special case.
+    // cut special part (34) and translate with twoDigits
+    // translate the rest (12) with twoDigits
+    // no need to care about 65, as it is 0.
+    console.log("Whohh! Special case!!!!")
+    text += twoDigits(Math.floor(myNum / 100)) + ' hundred'
+    if ((myNum % 100) > 0) text += twoDigits(myNum % 100)
+  } else {
+    // no special case. we need to deal with 654321
+    // 654 thousand 321
+    if (myNum > 999) {
+      text += threeDigits(Math.floor(myNum / 1000)) + ' thousand'
+      if ((myNum % 1000) > 0) text += ' '
+    }
+    if ((myNum % 1000) > 0) text += threeDigits(myNum % 1000)
+  }
+
+
+  // maybe we need to remove extra spaces!
+  return text
 }
+
 
 
 
