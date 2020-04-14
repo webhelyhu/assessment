@@ -18,3 +18,6 @@ Let's assume we will process numbers until Sextillion (10^21) but prepare the co
 
 Just relaized from the examples, that two-digit hundreds are needed, if there is no ten- or hundredthousands.
 (1999). I assume that this is needed also, if the number has millions or biggers also (for example 10000001999)
+
+Had some problem with spaces... Lots of if conditions are needed to check if we need or not...
+After some time, I decided to add extra spaces every time, and remove them just before returning the text.

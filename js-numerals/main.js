@@ -2,13 +2,10 @@
 
 const convToText = require('./convToText')
 
-console.log(3, convToText(3))
-console.log(32, convToText(32))
-console.log(321, convToText(321))
-console.log(1021, convToText(1021))
-console.log(501, convToText(501))
-console.log(921, convToText(921))
-console.log(4321, convToText(4321))
 
-console.log(Infinity, convToText(Infinity))
-console.log(-921, convToText(-921))
+
+const testNumbers = [-5001, 0, 1, 2, 3, undefined, 32, 222, 1021, 501, 921, 4321, Infinity, -921, 100004321, 10004321, 1004321, 104312, 14321]
+testNumbers.forEach(element => {
+  console.log(element, convToText(element))
+});
+
