@@ -1,0 +1,11 @@
+{
+  "name": "js-numerals-szy",
+  "version": "1.0.0",
+  "description": "solving js-numerals",
+  "main": "main.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC"
+}

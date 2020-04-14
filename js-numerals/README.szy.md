@@ -1,0 +1,1 @@
+# Notes from György Szy
