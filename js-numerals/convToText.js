@@ -56,14 +56,22 @@ const twoDigits = function (num = 0) {
   }
 }
 
-const threeDigits = function (num = 0) {
+const threeDigits = function (num = 0, specialAndNeeded) {
   // helper function, for three digit numbers.
   // uses twoDigits, and adds the hundred-part.
 
-  const hundred = ((num - (num % 100)) % 1000) / 100   // there must be a better way...
+  const hundred = (Math.floor(num / 100)) % 10
+  //  ((num - (num % 100)) % 1000) / 100   // there must be a better way...
   // console.log('hundred is: ', hundred)
 
   let lastTwo = twoDigits(num % 100)
+
+  // inserting the "and"
+  if ((num % 100 > 0)
+    && ((hundred > 0) || specialAndNeeded)) {
+    lastTwo = ' and ' + lastTwo
+  }
+  console.log('inserting: ', hundred, lastTwo)
 
   if (hundred > 0) {
     return ' ' + NUM_NAMES[hundred] + ' hundred ' + lastTwo
@@ -110,6 +118,9 @@ const convToText = function (num) {
   if (typeof num !== 'number' || num === Infinity || num === -Infinity || num !== num) return
   if (num === 0) return ZERO
 
+  // special and is needed: when the number is bigger than 99, but the hundreds are zero,
+  // so the twoDigits() have to know, if there is "99" at the end, we need an "and" before.
+  let specialAndNeeded = (num > 99)
 
   let text = ''
   if (num < 0) text = 'negative '
@@ -131,7 +142,7 @@ const convToText = function (num) {
 
 
   if ((myNum <= 9999)
-    && (myNum >= 2100)
+    && (myNum >= 1100)
     && Math.floor((myNum % 1000) / 100) != 0) {
 
     // special case.
@@ -141,14 +152,14 @@ const convToText = function (num) {
 
     // console.log('-----> Whohh! Special case!!!!:', myNum)
     text += twoDigits(Math.floor(myNum / 100)) + ' hundred '
-    if ((myNum % 100) > 0) text += twoDigits(myNum % 100)
+    if ((myNum % 100) > 0) text += ' and ' + twoDigits(myNum % 100)
   } else {
     // no special case. we need to deal with 654321
     // 654 thousand 321
     if (myNum > 999) {
       text += threeDigits(Math.floor(myNum / 1000)) + ' thousand '
     }
-    if ((myNum % 1000) > 0) text += threeDigits(myNum % 1000)
+    if ((myNum % 1000) > 0) text += threeDigits(myNum % 1000, specialAndNeeded)
   }
 
 

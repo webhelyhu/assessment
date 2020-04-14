@@ -33,3 +33,13 @@ or
 b) use bigInt numbers.
 
 As it was not required, right now my solution will return a text "number is too big to handle safely."
+
+## The "and"
+
+It seems that an "and" is needed if the last two digit is not zero, so before the "twenty-one" part.
+It is not clear if the "and" is needed at millions too?
+(for example: three hundred **and** twenty-two million two hundred?) I assume yes.
+
+Also a question: what about 1020? It is one thousand twenty or one thousand and twenty?
+(so, do we need the "and" when there are bigger parts and the twenty?)
+I assume yes. Special case 43234234200003 is ... and three.
