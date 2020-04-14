@@ -41,12 +41,22 @@ const NUM_NAMES = {
 
 
 // helper function: for three digits
+// MUST BE called with one number agument between [0..999]
 const threeDigits = function (num) {
-  return num
+  text = ""
+  let hundred = ((num % 1000) - (num % 100)) / 100    //the hundred-digit
+  if (hundred > 0) text = NUM_NAMES[hundred] + " hundred"
+
+
+  return text
 }
 
 
 const convToText = function (num) {
+  // here we will check for bad parameter:
+  // is it a number? too big? infinity, -infinity, NaN?
+  // negative?
+
   return threeDigits(num % 1000)
 }
 
