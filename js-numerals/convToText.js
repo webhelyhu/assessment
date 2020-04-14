@@ -1,5 +1,4 @@
 const BIG_NUM_NAMES = [
-  'thousand',
   'million',
   'billion',
   'trillion',
@@ -72,9 +71,30 @@ const threeDigits = function (num = 0) {
 }
 
 
-const millionPart = function (num) {
-  // can be negative?
-  return ''
+const millionPart = function (num, iterations = 0) {
+  // we trust we got two parameters:
+  // num = is the number to print with threeDigits
+  // iterations = the number of iterations already called =>
+  // shows which name to print after value.
+  if (num <= 0) return ''
+
+  let text = ''
+
+  let biggers = Math.floor(num / 1000)
+  let myNum = num % 1000
+
+  if (iterations >= (BIG_NUM_NAMES.length - 1)) {
+    // at the last name, we just print the number with the name.
+    return num + ' ' + BIG_NUM_NAMES[iterations] + ' '
+  }
+
+  if (biggers > 0) {
+    // there is a bigger part, and we can iterate:
+    return millionPart(biggers, iterations + 1) + ' ' + threeDigits(myNum) + ' ' + BIG_NUM_NAMES[iterations] + ' '
+  }
+
+  // there is no biggers, we simply returnt the threeDigits
+  return threeDigits(num) + ' ' + BIG_NUM_NAMES[iterations] + ' '
 }
 
 
@@ -82,14 +102,18 @@ const convToText = function (num) {
   // here we will check for bad parameter:
   // is it a number? too big? infinity, -infinity, NaN?
   // negative?
-  if (typeof num !== 'number' || num === Infinity || num === -Infinity || num !== num) return
+  // if zero, return zero.
   // using Math.abs() and 'negative ' to handle negative numbers
+
+  if (typeof num !== 'number' || num === Infinity || num === -Infinity || num !== num) return
+  if (num === 0) return NUM_NAMES[0]
+
   let text = ''
   if (num < 0) text = 'negative '
   let myNum = Math.floor(Math.abs(num))
 
   // handle the part above million:
-  text += millionPart(myNum)
+  text += millionPart(Math.floor(myNum / 1000000))
   myNum = myNum % 1000000
 
   // so, we need to handle special case, when there can be 'twenty-one hundred...'
@@ -109,7 +133,8 @@ const convToText = function (num) {
     // cut special part (34) and translate with twoDigits
     // translate the rest (12) with twoDigits
     // no need to care about 65, as it is 0.
-    console.log('-----> Whohh! Special case!!!!:', myNum)
+
+    // console.log('-----> Whohh! Special case!!!!:', myNum)
     text += twoDigits(Math.floor(myNum / 100)) + ' hundred '
     if ((myNum % 100) > 0) text += twoDigits(myNum % 100)
   } else {
@@ -123,7 +148,7 @@ const convToText = function (num) {
 
 
   //remove extra spaces
-  text = text.replace(/\s+/g, " ")
+  text = text.trim().replace(/\s+/g, " ")
   return text
 }
 
