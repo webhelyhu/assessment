@@ -43,3 +43,7 @@ It is not clear if the "and" is needed at millions too?
 Also a question: what about 1020? It is one thousand twenty or one thousand and twenty?
 (so, do we need the "and" when there are bigger parts and the twenty?)
 I assume yes. Special case 43234234200003 is ... and three.
+
+## UI/UX
+
+Sorry, I spent no time with the visual part :(

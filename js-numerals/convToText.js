@@ -71,7 +71,7 @@ const threeDigits = function (num = 0, specialAndNeeded) {
     && ((hundred > 0) || specialAndNeeded)) {
     lastTwo = ' and ' + lastTwo
   }
-  console.log('inserting: ', hundred, lastTwo)
+  // console.log('inserting: ', hundred, lastTwo)
 
   if (hundred > 0) {
     return ' ' + NUM_NAMES[hundred] + ' hundred ' + lastTwo
@@ -123,7 +123,7 @@ const convToText = function (num) {
   let specialAndNeeded = (num > 99)
 
   let text = ''
-  if (num < 0) text = 'negative '
+  if (num < 0) text = 'minus '               // I believe it is 'minus', not 'negative'
   let myNum = Math.floor(Math.abs(num))
 
   // if number is bigger than Number.MAX_SAFE_VALUE, exit.

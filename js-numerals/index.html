@@ -20,7 +20,7 @@
         .addEventListener("submit", function (event) {
           event.preventDefault();
           document.getElementById("answer").innerText = convToText(
-            document.getElementById("num-input").value
+            parseInt(document.getElementById("num-input").value)
           );
         });
     </script>
