@@ -40,13 +40,22 @@ const NUM_NAMES = {
 }
 
 
-// helper function: for three digits
-// MUST BE called with one number agument between [0..999]
-const threeDigits = function (num) {
-  text = ""
-  let hundred = ((num % 1000) - (num % 100)) / 100    //the hundred-digit
-  if (hundred > 0) text = NUM_NAMES[hundred] + " hundred"
+const twoDigits = function (num = 0) {
+  // helper function: for two digits
+  // MUST BE called with one number agument between [0..99]
+  // check if it is a number and not infinity, and not NaN
+  if (typeof num !== 'number' || num === Infinity || num === -Infinity || num !== num) return
+  // then normalize it into [0..99]
+  let digits = Math.floor(Math.abs(num % 100))  // I am not paranoid...
+  let text = ""
 
+  if (NUM_NAMES.hasOwnProperty(digits)) {
+    text = NUM_NAMES[digits]
+  } else {
+    text = NUM_NAMES[(digits - (digits % 10))] + '-' + NUM_NAMES[(digits % 10)]
+  }
+
+  // if (hundred > 0) text = NUM_NAMES[hundred] + " hundred"
 
   return text
 }
@@ -57,7 +66,7 @@ const convToText = function (num) {
   // is it a number? too big? infinity, -infinity, NaN?
   // negative?
 
-  return threeDigits(num % 1000)
+  return twoDigits(num % 100)
 }
 
 

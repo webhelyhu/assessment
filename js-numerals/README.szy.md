@@ -15,3 +15,6 @@ to find out exact names of bigger numbers.
 Every 3 digits can be processed with the block's name.
 It is not clear, how big or small the number may be.
 Let's assume we will process numbers until Sextillion (10^21) but prepare the code to work farther if needed.
+
+Just relaized from the examples, that two-digit hundreds are needed, if there is no ten- or hundredthousands.
+(1999). I assume that this is needed also, if the number has millions or biggers also (for example 10000001999)
