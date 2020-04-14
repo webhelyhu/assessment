@@ -4,5 +4,9 @@ const convToText = function (num) {
   return num
 }
 
-module.exports = convToText
 
+
+// export only if on server side
+if (typeof module === 'object') {
+  module.exports = convToText
+}
