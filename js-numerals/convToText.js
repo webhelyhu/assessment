@@ -7,8 +7,10 @@ const BIG_NUM_NAMES = [
   'sextillion'
 ]
 
+const ZERO = 'zero'
+
 const NUM_NAMES = {
-  0: 'zero',
+  0: '',
   1: 'one',
   2: 'two',
   3: 'three',
@@ -106,7 +108,7 @@ const convToText = function (num) {
   // using Math.abs() and 'negative ' to handle negative numbers
 
   if (typeof num !== 'number' || num === Infinity || num === -Infinity || num !== num) return
-  if (num === 0) return NUM_NAMES[0]
+  if (num === 0) return ZERO
 
   let text = ''
   if (num < 0) text = 'negative '
