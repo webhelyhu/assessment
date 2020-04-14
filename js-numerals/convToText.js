@@ -110,9 +110,13 @@ const convToText = function (num) {
   if (typeof num !== 'number' || num === Infinity || num === -Infinity || num !== num) return
   if (num === 0) return ZERO
 
+
   let text = ''
   if (num < 0) text = 'negative '
   let myNum = Math.floor(Math.abs(num))
+
+  // if number is bigger than Number.MAX_SAFE_VALUE, exit.
+  if (myNum > 9007199254740991) return "number is too big to handle safely."
 
   // handle the part above million:
   text += millionPart(Math.floor(myNum / 1000000))
@@ -120,16 +124,15 @@ const convToText = function (num) {
 
   // so, we need to handle special case, when there can be 'twenty-one hundred...'
   // this happens when the number is (places: 654321)
-  // 43 == >10
-  // 65 == 00  --- as the number is less than a million, -> myNum < 10.000
-  //  4 != 0
-  //  3 != 0
-  // okay, lets do it the dirty way first
+  //
+  // first occurence: 2100 -> twenty-one hundred
+  // last occurence: 9999 -> ninety-nine hundred
+  // no occurence at "ten hundreds"
 
-  if (myNum % 10000 > 1000
-    && (myNum < 10000)
-    && Math.floor((myNum % 1000) / 100) != 0
-    && Math.floor((myNum % 100) / 10) != 0) {
+
+  if ((myNum <= 9999)
+    && (myNum >= 2100)
+    && Math.floor((myNum % 1000) / 100) != 0) {
 
     // special case.
     // cut special part (34) and translate with twoDigits

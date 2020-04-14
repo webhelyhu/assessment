@@ -21,3 +21,15 @@ Just relaized from the examples, that two-digit hundreds are needed, if there is
 
 Had some problem with spaces... Lots of if conditions are needed to check if we need or not...
 After some time, I decided to add extra spaces every time, and remove them just before returning the text.
+
+## Exceeding MAX_SAFE_INTEGER
+
+So, if the number is bigger than the max safe integer value (9007199254740991), in that case it will be
+rounded, so it will not be accurate.
+
+If there is a need for that, the process can be transformed in two ways:
+a) change the input into TEXT filed, and filter for numbers only, and process it as a text
+or
+b) use bigInt numbers.
+
+As it was not required, right now my solution will return a text "number is too big to handle safely."
