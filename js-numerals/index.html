@@ -13,5 +13,16 @@
       <button type="submit">Convert</button>
     </form>
     <div id="answer"></div>
+
+    <script>
+      document
+        .getElementById("convert-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          document.getElementById("answer").innerText = convToText(
+            document.getElementById("num-input").value
+          );
+        });
+    </script>
   </body>
 </html>
