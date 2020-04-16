@@ -44,7 +44,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         users: [],
-        loading: false
+        loading: true
       };
     default:
       return state;
