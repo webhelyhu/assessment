@@ -10,6 +10,11 @@ import {
 } from './types';
 
 const URL_BASE = '/api/backend';
+const headerConfig = {
+  headers: {
+    'Content-Type': 'application/json'
+  }
+};
 
 
 // Get all users
@@ -45,9 +50,10 @@ export const getUsers = () => async dispatch => {
 
 // Get user by ID
 export const getUserById = userId => async dispatch => {
+  console.log('getUserById ', `${URL_BASE}/${userId}`)
   try {
-    const res = await axios.get(`${URL_BASE}/users/${userId}`);
-
+    const res = await axios.get(`${URL_BASE}/${userId}`, headerConfig);
+    console.log('Loaded user', userId)
     dispatch({
       type: GET_USER,
       payload: res.data
@@ -69,15 +75,8 @@ export const createUser = (
   // console.log("Creating", formData.first_name)
 
   try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-
-    const res = await axios.post(`${URL_BASE}`, formData, config);
+    await axios.post(`${URL_BASE}`, formData, headerConfig);
     // console.log("User created")
-    // console.log(res)
 
     // // sending back the new user data (the response from axios) with GET_USER
     // dispatch({
@@ -106,19 +105,12 @@ export const createUser = (
 
 
 // Update user
-export const UpdateUser = (
+export const updateUser = (
   formData
 ) => async dispatch => {
   try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
 
-    // ASSUME id is in formData.id !!!! chk!
-
-    await axios.patch(`${URL_BASE}/users/${formData.id}`, formData, config);
+    await axios.patch(`${URL_BASE}/users/${formData.id}`, formData, headerConfig);
 
     // const res = await axios.patch(`${URL_BASE}/users/${formData.id}`, formData, config);
     //

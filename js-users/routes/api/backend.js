@@ -9,15 +9,22 @@ const URL_BASE = 'http://js-assessment-backend.herokuapp.com';
 // @access   Public
 router.get('/:userid', async (req, res) => {
   let userData;
-  console.log("Getting user", req.params.userid)
+  console.log("Getting ", `${URL_BASE}/users/${req.params.userid}`)
 
   try {
-    userData = await axios.get(`${URL_BASE}/users/${req.params.userid}`);
+    userData = await axios.get(`http://js-assessment-backend.herokuapp.com/users/1000`,
+      {
+        headers:
+        {
+          'Content-Type': 'application/json',
+          'Accept': '*/*'
+        }
+      });
+    res.status(200).send(userData.data)
   } catch (err) {
     console.error("Error with backend:", err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send('Server Error ' + JSON.stringify(err));
   }
-  res.status(200).send(userData.data)
 });
 
 
@@ -34,7 +41,7 @@ router.get('/', async (req, res) => {
     userlist = await axios.get(`${URL_BASE}/users.json`);
   } catch (err) {
     console.error("Error with backend:", err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send('Server Error ' + JSON.stringify(err));
   }
   console.log(userlist.data.length)
   // const answer = JSON.parse(userlist.data)
@@ -57,8 +64,10 @@ router.post(
     console.log(req.body)
     const body = req.body;
     const config = {
-      headers: {
-        'Content-Type': 'application/json'
+      headers:
+      {
+        'Content-Type': 'application/json',
+        'Accept': '*/*'
       }
     };
 
@@ -69,7 +78,7 @@ router.post(
 
     } catch (err) {
       console.error(JSON.parse(JSON.stringify(err)));
-      res.status(500).send('Server Error');
+      res.status(500).send('Server Error ' + JSON.stringify(err));
     }
     console.log("Creating finished.")
   }

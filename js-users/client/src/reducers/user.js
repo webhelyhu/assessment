@@ -8,6 +8,11 @@ import {
 
 
 const initialState = {
+  user: {
+    first_name: '',
+    last_name: '',
+    status: 'active'
+  },
   users: [],
   loading: true,
   error: {}
@@ -18,6 +23,7 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case GET_USER:       // payload is the user
+      console.log('Got user', payload.first_name)
       return {
         ...state,
         user: payload,
