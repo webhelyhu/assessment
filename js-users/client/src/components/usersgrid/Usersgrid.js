@@ -11,7 +11,7 @@ const Usersgrid = () => {
       <div>
         <h1 className='large text-primary'>Users</h1>
         <p className='lead'>
-          <i className='fab fa-users' /> See the list of users
+          List of users. Click First Name to see details, icon to change status.
           </p>
         <div className='profiles'>
           <UsersTable />

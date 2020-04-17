@@ -63,8 +63,7 @@ export const getUserById = userId => async dispatch => {
 // Create user
 export const createUser = (
   formData,
-  history,
-  edit = false
+  history
 ) => async dispatch => {
   try {
     const config = {
@@ -75,7 +74,7 @@ export const createUser = (
 
     const res = await axios.post(`${URL_BASE}/users`, formData, config);
 
-    // sending back the user data from response
+    // sending back the new user data (the response from axios) with GET_USER
     dispatch({
       type: GET_USER,
       payload: res.data
@@ -86,6 +85,7 @@ export const createUser = (
     history.push('/dashboard');  // where to go after creating user?
 
   } catch (err) {
+    console.log(err)
     const errors = err.response.data.errors;
 
     if (errors) {

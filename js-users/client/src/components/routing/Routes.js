@@ -6,6 +6,7 @@ import Alert from '../layout/Alert';
 import Profiles from '../profiles/Profiles';
 import Users from '../users/Users';
 import Usersgrid from '../usersgrid/Usersgrid';
+import AddUser from '../addUser/AddUser'
 import Profile from '../profile/Profile';
 import NotFound from '../layout/NotFound';
 
@@ -20,6 +21,7 @@ const Routes = props => {
         <Route exact path="/profile/:id" component={Profile} />
         <Route exact path="/users" component={Users} />
         <Route exact path="/usersgrid" component={Usersgrid} />
+        <Route exact path="/adduser" component={AddUser} />
         <Route component={NotFound} />
       </Switch>
     </section>

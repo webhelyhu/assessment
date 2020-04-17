@@ -18,7 +18,7 @@ function GlobalFilter({
 
   return (
     <span>
-      Search:{' '}
+      Filter the table:{' '}
       <input
         value={globalFilter || ''}
         onChange={e => {

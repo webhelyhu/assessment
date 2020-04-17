@@ -19,7 +19,7 @@ const Navbar = () => {
           <NavLink activeClassName="activepagelink" to='/usersgrid'>Usersgrid</NavLink>
         </li>
         <li>
-          <NavLink activeClassName="activepagelink" to='/profiles'>Developers</NavLink>
+          <NavLink activeClassName="activepagelink" to='/adduser'>Add User</NavLink>
         </li>
         <li>
           <NavLink activeClassName="activepagelink" to='/register'>Register</NavLink>
