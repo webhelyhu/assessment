@@ -17,7 +17,6 @@ router.get('/:userid', async (req, res) => {
     console.error("Error with backend:", err.message);
     res.status(500).send('Server Error');
   }
-
   res.status(200).send(userData.data)
 });
 
@@ -37,7 +36,9 @@ router.get('/', async (req, res) => {
     console.error("Error with backend:", err.message);
     res.status(500).send('Server Error');
   }
-
+  console.log(userlist.data.length)
+  // const answer = JSON.parse(userlist.data)
+  // console.log("sending", answer.length, "rows.")
   res.status(200).send(userlist.data)
 });
 

@@ -65,24 +65,49 @@ const UsersTable = function ({ getUsers, user: { users, loading } }) {
   // Let the table remove the filter if the string is empty
   fuzzyTextFilterFn.autoRemove = val => !val
 
+  const FirstNameDisplay = (values) => {
+    // console.log('FirstNameDisplay', values)
+    return (
+      <>
+        {values.values.cell.value} (#{values.values.row.original.id})
+      </>
+    )
+  }
+
+  const changeStatus = (id) => {
+    console.log("Changing status of id", id)
+  }
+
+  const StatusDisplay = (values) => {
+    // 
+    return (
+      <span onClick={() => changeStatus(values.values.row.original.id)}>
+        {(values.values.cell.value === 'active' ?
+          (<img className="user-status" alt="active user" src="/user-check.png" />)
+          : (<img className="user-status" alt="locked user" src="/user-denied.png" />))}
+      </span>
+    )
+  }
 
 
   const columns = useMemo(() => [
     {
       Header: 'First Name',
-      accessor: 'first_name', // accessor is the "key" in the data
+      accessor: 'first_name',
+      Cell: cellInfo => <FirstNameDisplay values={cellInfo} />
     },
     {
       Header: 'Last Name',
-      accessor: 'last_name', // accessor is the "key" in the data
+      accessor: 'last_name' // accessor is the "key" in the data
     },
     {
       Header: 'Created At',
-      accessor: 'created_at',
+      accessor: 'created_at'
     },
     {
       Header: 'Status',
       accessor: 'status',
+      Cell: cellInfo => <StatusDisplay values={cellInfo} />
     },
   ], [])
 
@@ -100,8 +125,9 @@ const UsersTable = function ({ getUsers, user: { users, loading } }) {
     gotoPage,
     nextPage,
     previousPage,
-    state: { pageIndex, pageSize, sortBy, filters, globalFilter },
-    visibleColumns,
+    state: { pageIndex, globalFilter },
+    // state: { pageIndex, pageSize, sortBy, filters, globalFilter },
+    // visibleColumns,
     preGlobalFilteredRows,
     setGlobalFilter
   } = useTable({
