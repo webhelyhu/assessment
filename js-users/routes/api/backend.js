@@ -22,7 +22,7 @@ router.get('/:userid', async (req, res) => {
 
 
 
-// @route    GET api/js-backend/users
+// @route    GET api/backend
 // @desc     Get all the users from the js-backend
 // @access   Public
 router.get('/', async (req, res) => {
@@ -41,6 +41,40 @@ router.get('/', async (req, res) => {
   // console.log("sending", answer.length, "rows.")
   res.status(200).send(userlist.data)
 });
+
+
+
+
+// @route    POST api/backend
+// @desc     Create a new user
+// @access   Public
+router.post(
+  '/', [],
+  async (req, res) => {
+
+    let newUserData;
+    console.log("Creating new user")
+    console.log(req.body)
+    const body = req.body;
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      newUserData = await axios.post(`${URL_BASE}/users.json`, body, config);
+      console.log(newUserData.data)
+      res.status(201).send(newUserData.data);
+
+    } catch (err) {
+      console.error(JSON.parse(JSON.stringify(err)));
+      res.status(500).send('Server Error');
+    }
+    console.log("Creating finished.")
+  }
+);
+
 
 
 module.exports = router;

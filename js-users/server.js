@@ -1,4 +1,5 @@
 const express = require('express');
+const proxy = require('express-http-proxy');
 const connectDB = require('./config/db');
 const path = require('path');
 
@@ -18,6 +19,13 @@ app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
 app.use('/api/backend', require('./routes/api/backend'));
+app.use('/proxy', proxy('http://js-assessment-backend.herokuapp.com', {
+  proxyReqOptDecorator: function (proxyReqOpts, srcReq) {
+    // you can update headers
+    proxyReqOpts.headers['Content-Type'] = 'application/json';
+    return proxyReqOpts;
+  }
+}));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

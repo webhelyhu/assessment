@@ -9,7 +9,7 @@ import {
   CLEAR_USERS
 } from './types';
 
-const URL_BASE = 'http://js-assessment-backend.herokuapp.com';
+const URL_BASE = '/api/backend';
 
 
 // Get all users
@@ -60,11 +60,14 @@ export const getUserById = userId => async dispatch => {
   }
 };
 
+
 // Create user
 export const createUser = (
   formData,
   history
 ) => async dispatch => {
+  // console.log("Creating", formData.first_name)
+
   try {
     const config = {
       headers: {
@@ -72,17 +75,19 @@ export const createUser = (
       }
     };
 
-    const res = await axios.post(`${URL_BASE}/users`, formData, config);
+    const res = await axios.post(`${URL_BASE}`, formData, config);
+    // console.log("User created")
+    // console.log(res)
 
-    // sending back the new user data (the response from axios) with GET_USER
-    dispatch({
-      type: GET_USER,
-      payload: res.data
-    });
+    // // sending back the new user data (the response from axios) with GET_USER
+    // dispatch({
+    //   type: GET_USER,
+    //   payload: res.data
+    // });
 
-    dispatch(setAlert('User Created', 'success'));
+    dispatch(setAlert(`User ${formData.first_name} Created`, 'success'));
 
-    history.push('/dashboard');  // where to go after creating user?
+    // history.push('/dashboard');    // where to go after creating user?
 
   } catch (err) {
     console.log(err)
