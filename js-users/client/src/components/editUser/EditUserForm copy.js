@@ -1,37 +1,37 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createUser } from '../../actions/user';
+import { updateUser, getUserById } from '../../actions/user';
 
-const AddUserForm = ({ createUser, history }) => {
-  const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
-    status: ''
-  });
+const EditUserForm = ({ updataeUser, getUserById, user: { user }, history, match }) => {
 
-  const {
+  const nullUser = !user;
+  useEffect(() => {
+    getUserById(match.params.id);
+  }, [getUserById, match.params.id, nullUser]);
+
+  let {
     first_name,
     last_name,
     status
-  } = formData;
+  } = user;
 
-  const onChange = e =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // const onChange = e =>
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Add New User</h1>
+      <h1 className='large text-primary'>Edit User</h1>
       <p className='lead'>
-        <i className='fas fa-code-branch' /> extra text about adding user
+        <i className='fas fa-code-branch' />extra text
       </p>
       <small>* = required field</small>
       <form
         className='form'
         onSubmit={e => {
           e.preventDefault();
-          createUser(formData, history);
+          updateUser(user, history);
         }}
       >
         <div className='form-group'>
@@ -39,8 +39,8 @@ const AddUserForm = ({ createUser, history }) => {
             type='text'
             placeholder='* First Name'
             name='first_name'
-            value={first_name}
-            onChange={e => onChange(e)}
+            value={user.first_name}
+            onChange={e => user[e.target.name] = e.target.value}
             required
           />
         </div>
@@ -50,7 +50,7 @@ const AddUserForm = ({ createUser, history }) => {
             placeholder='* Last Name'
             name='last_name'
             value={last_name}
-            onChange={e => onChange(e)}
+            onChange={e => user[e.target.name] = e.target.value}
             required
           />
         </div>
@@ -60,7 +60,7 @@ const AddUserForm = ({ createUser, history }) => {
             placeholder='* Status (active or locked)'
             name='status'
             value={status}
-            onChange={e => onChange(e)}
+            onChange={e => user[e.target.name] = e.target.value}
             required
           />
         </div>
@@ -73,11 +73,18 @@ const AddUserForm = ({ createUser, history }) => {
   );
 };
 
-AddUserForm.propTypes = {
-  createUser: PropTypes.func.isRequired
+EditUserForm.propTypes = {
+  updateUser: PropTypes.func.isRequired,
+  getUserById: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
 };
 
+const mapStateToProps = (state) => ({
+  user: state.user,
+  auth: state.auth
+});
+
 export default connect(
-  null,
-  { createUser }
-)(withRouter(AddUserForm));
+  mapStateToProps,
+  { updateUser, getUserById }
+)(withRouter(EditUserForm));

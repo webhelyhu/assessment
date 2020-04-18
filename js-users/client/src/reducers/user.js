@@ -3,7 +3,8 @@ import {
   USER_ERROR,
   GET_USERS,
   UPDATE_USER,
-  CLEAR_USERS
+  CLEAR_USERS,
+  UPDATE_FORM_USER
 } from '../actions/types';
 
 
@@ -22,7 +23,7 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case GET_USER:       // payload is the user
+    case GET_USER:            // payload is the user
       console.log('Got user', payload.first_name)
       return {
         ...state,
@@ -52,6 +53,11 @@ export default function (state = initialState, action) {
         users: [],
         loading: true
       };
+    case UPDATE_FORM_USER:
+      return {
+        ...state,
+        user: { ...state.user, ...payload }
+      }
     default:
       return state;
   }

@@ -5,7 +5,7 @@ import {
   GET_USER,
   GET_USERS,
   USER_ERROR,
-  UPDATE_USER,
+  UPDATE_FORM_USER,
   CLEAR_USERS
 } from './types';
 
@@ -86,7 +86,7 @@ export const createUser = (
 
     dispatch(setAlert(`User ${formData.first_name} Created`, 'success'));
 
-    // history.push('/dashboard');    // where to go after creating user?
+    // history.push('/');    // where to go after creating user?
 
   } catch (err) {
     console.log(err)
@@ -114,16 +114,16 @@ export const updateUser = (
 
     // const res = await axios.patch(`${URL_BASE}/users/${formData.id}`, formData, config);
     //
-    // The server for a goog PATCH will answer with "204 No Content"
+    // The server for a good PATCH will answer with "204 No Content"
     // so we cannot dispatch res.data (will be empty)
-    // so will send the userId back
+    // so no need to dispatch here.
     //
-    dispatch({
-      type: UPDATE_USER,
-      payload: formData.id
-    });
+    // dispatch({
+    //   type: UPDATE_USER,
+    //   payload: 
+    // });
 
-    dispatch(setAlert('User Updated', 'success'));
+    dispatch(setAlert(`User ${formData.first_name} updated`, 'success'));
 
   } catch (err) {
     const errors = err.response.data.errors;
@@ -132,10 +132,29 @@ export const updateUser = (
       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
 
+    // sending err info:
+    let msg, status
+    if (
+      typeof err !== 'undefined'
+      && typeof err.response !== 'undefined'
+      && typeof err.response.statusText !== 'undefined'
+    ) {
+      msg = "Error " + err.response.statusText
+      status = err.response.status
+    } else {
+      msg = "Error (no description)"
+      status = 500
+    }
     dispatch({
       type: USER_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
+      payload: { msg, status }
     });
   }
 };
 
+
+
+export const updateFormUser = (payload) =>
+  async dispatch => {
+    dispatch({ type: UPDATE_FORM_USER, payload })
+  }
