@@ -108,47 +108,16 @@ export const createUser = (
 export const updateUser = (
   formData
 ) => async dispatch => {
+  const { id, first_name, last_name, status } = formData
+  const updateInfo = { first_name, last_name, status }
+  console.log("updateUser with", updateInfo)
   try {
-
-    await axios.patch(`${URL_BASE}/users/${formData.id}`, formData, headerConfig);
-
-    // const res = await axios.patch(`${URL_BASE}/users/${formData.id}`, formData, config);
-    //
-    // The server for a good PATCH will answer with "204 No Content"
-    // so we cannot dispatch res.data (will be empty)
-    // so no need to dispatch here.
-    //
-    // dispatch({
-    //   type: UPDATE_USER,
-    //   payload: 
-    // });
-
-    dispatch(setAlert(`User ${formData.first_name} updated`, 'success'));
-
+    await axios.patch(`${URL_BASE}/${id}`, updateInfo, headerConfig);
+    dispatch(setAlert(`User ${first_name} updated`, 'success'));
+    // where to go? we have a history prop if needs redirection.
   } catch (err) {
-    const errors = err.response.data.errors;
-
-    if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-    }
-
-    // sending err info:
-    let msg, status
-    if (
-      typeof err !== 'undefined'
-      && typeof err.response !== 'undefined'
-      && typeof err.response.statusText !== 'undefined'
-    ) {
-      msg = "Error " + err.response.statusText
-      status = err.response.status
-    } else {
-      msg = "Error (no description)"
-      status = 500
-    }
-    dispatch({
-      type: USER_ERROR,
-      payload: { msg, status }
-    });
+    dispatch(setAlert(`Error updating user ${first_name}!`, 'danger'));
+    console.log("Error updating user", err)
   }
 };
 

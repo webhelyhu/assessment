@@ -4,7 +4,7 @@ const router = express.Router();
 
 const URL_BASE = 'http://js-assessment-backend.herokuapp.com';
 
-// @route    GET api/js-backend/users/:id
+// @route    GET api/backend/:id
 // @desc     Get all the users from the js-backend
 // @access   Public
 router.get('/:userid', async (req, res) => {
@@ -84,6 +84,38 @@ router.post(
   }
 );
 
+
+
+// @route    PATCH api/backend/:id
+// @desc     Update a user
+// @access   Public
+router.patch(
+  '/:userid', [],
+  async (req, res) => {
+
+    let newUserData;
+    // console.log("Patching ", `${URL_BASE}/users/${req.params.userid}`)
+    const body = req.body;
+    const config = {
+      headers:
+      {
+        'Content-Type': 'application/json',
+        'Accept': '*/*'
+      }
+    };
+
+    try {
+      newUserData = await axios.patch(`${URL_BASE}/users/${req.params.userid}`, body, config);
+      console.log("Done updating. Answer: ", newUserData.data)
+      res.status(201).send(newUserData.data);
+
+    } catch (err) {
+      console.error('Server Error ' + err.message);
+      res.status(422).send('Server Error ' + err.message);
+    }
+    console.log("Updating finished.")
+  }
+);
 
 
 module.exports = router;
