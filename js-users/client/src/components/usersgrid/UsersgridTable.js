@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import UserItem from './UserItem';
 import Spinner from '../layout/Spinner';
-import { useTable, usePagination, useGlobalFilter } from 'react-table'
+import { useTable, usePagination, useGlobalFilter, useSortBy } from 'react-table'
 import { getUsers, updateUserStatus } from '../../actions/user'
 import matchSorter from 'match-sorter'   // react-table is using it for global filter
+import moment from 'moment'
 
 import './UsersgridTable.css'
 
@@ -18,7 +19,7 @@ function GlobalFilter({
   const count = preGlobalFilteredRows.length
 
   return (
-    <span>
+    <span className="global-filter">
       Filter the table:{' '}
       <input
         value={globalFilter || ''}
@@ -69,12 +70,21 @@ const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loadin
 
   const FirstNameDisplay = (values) => {
     // the user id is: values.values.row.original.id
-    const editLink = `/users/${values.values.row.original.id}`
+    const editLink = `/edit/${values.values.row.original.id}`
     // return '<a href="/users/' + values.values.row.original.id + '">' + values.values.cell.value + '</a>'
     return (
       <a href={editLink}>
         {values.values.cell.value}
       </a>
+    )
+  }
+
+
+  const DateDisplay = (values) => {
+    return (
+      <span>
+        {moment(values.values.cell.value).format('YYYY-MM-DD HH:ss Z')}
+      </span>
     )
   }
 
@@ -105,7 +115,8 @@ const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loadin
     },
     {
       Header: 'Created At',
-      accessor: 'created_at'
+      accessor: 'created_at',
+      Cell: cellInfo => <DateDisplay values={cellInfo} />
     },
     {
       Header: 'Status',
@@ -140,6 +151,7 @@ const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loadin
     filterTypes
   },
     useGlobalFilter,
+    useSortBy,
     usePagination)
 
   useEffect(() => {
@@ -153,7 +165,7 @@ const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loadin
         <Spinner />
       ) : (
 
-          <Fragment>
+          <div className="user-table">
             {users.length < 1 && <h4>No users found...</h4>}
 
             <GlobalFilter
@@ -162,12 +174,22 @@ const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loadin
               setGlobalFilter={setGlobalFilter}
             />
 
-            < table {...getTableProps()}>
-              <thead className="egyes" className="kettes">
+            <table {...getTableProps()} id="main-table">
+              <thead>
                 {headerGroups.map(headerGroup => (
                   <tr {...headerGroup.getHeaderGroupProps()}>
                     {headerGroup.headers.map(column => (
-                      <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                      <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                        {column.render('Header')}
+                        {/* Add a sort direction indicator */}
+                        <span>
+                          {column.isSorted
+                            ? column.isSortedDesc
+                              ? ' 🔽'
+                              : ' 🔼'
+                            : ' ↕️'}
+                        </span>
+                      </th>
                     ))}
                   </tr>
                 ))}
@@ -175,12 +197,11 @@ const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loadin
               <tbody {...getTableBodyProps()}>
                 {page.map(row => {
                   prepareRow(row)
-                  console.log(row)
                   return (
-                    <tr {...row.getRowProps()} className={row.cells[3].value}>
+                    <tr {...row.getRowProps()} className={`status-${row.cells[3].value}`}>
                       {
                         row.cells.map(cell => {
-                          return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                          return <td {...cell.getCellProps()} className={`data-${cell.column.id}`}>{cell.render('Cell')}</td>
                         })
                       }
                     </tr>
@@ -221,10 +242,10 @@ const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loadin
                 />
               </span>
             </div>
-          </Fragment>
+          </div>
         )
       }
-    </Fragment >
+    </Fragment>
   )
 }
 

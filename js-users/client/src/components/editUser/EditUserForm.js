@@ -20,10 +20,6 @@ const EditUserForm = ({ updateUser, getUserById, updateFormUser, user: { user, l
         <Spinner />
       ) : (
           <Fragment>
-            <h1 className='large text-primary'>Edit User</h1>
-            <p className='lead'>
-              <i className='fas fa-code-branch' />Make your changes!
-            </p>
             <small>* = required field</small>
             <form
               className='form'
@@ -39,7 +35,7 @@ const EditUserForm = ({ updateUser, getUserById, updateFormUser, user: { user, l
                   name='first_name'
                   value={user.first_name}
                   onChange={e => updateFormUser({ [e.target.name]: e.target.value })}
-                  required
+                // required
                 />
               </div>
               <div className='form-group'>
@@ -49,11 +45,10 @@ const EditUserForm = ({ updateUser, getUserById, updateFormUser, user: { user, l
                   name='last_name'
                   value={user.last_name}
                   onChange={e => updateFormUser({ [e.target.name]: e.target.value })}
-                  required
                 />
               </div>
               <div className='form-group'>
-                <select
+                {/* <select
                   name="status"
                   id="select-status"
                   value={user.status}
@@ -61,11 +56,11 @@ const EditUserForm = ({ updateUser, getUserById, updateFormUser, user: { user, l
                 >
                   <option value="active">Active</option>
                   <option value="locked">Locked</option>
-                </select>
+                </select> */}
               </div>
-              <input type='submit' className='btn btn-primary my-1' />
-              <Link className='btn btn-light my-1' to='/'>
-                Homepage
+              <input type='submit' value="Submit" readOnly className='btn btn-primary my-1' />
+              <Link className='btn btn-light my-1' to='/users'>
+                Users
         </Link>
             </form>
           </Fragment>

@@ -19,7 +19,7 @@ const Navbar = () => {
           <NavLink activeClassName="activepagelink" to='/rawusers'>Raw(users)</NavLink>
         </li>
         <li>
-          <NavLink activeClassName="activepagelink" to='/adduser'>Add User</NavLink>
+          <NavLink activeClassName="activepagelink" to='/new'>Add User</NavLink>
         </li>
       </ul>
     </nav>

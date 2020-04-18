@@ -1,7 +1,30 @@
-.active {
+.user-table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#main-table {
+  word-break: break-all;
+}
+
+#main-table td {
+  max-width: 25vw;
+}
+
+.global-filter {
   background: lightgray;
 }
 
-.locked {
+.data-status {
+  text-align: center;
+}
+
+.status-active {
+  background: lightgray;
+}
+
+.status-locked {
   text-decoration: line-through;
 }

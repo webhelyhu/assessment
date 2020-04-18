@@ -12,10 +12,10 @@ const Routes = props => {
     <section className="container">
       <Alert />
       <Switch>
-        <Route exact path="/users/:id" component={EditUser} />
+        <Route exact path="/edit/:id" component={EditUser} />
         <Route exact path="/rawusers" component={Users} />
         <Route exact path="/users" component={Usersgrid} />
-        <Route exact path="/adduser" component={AddUser} />
+        <Route exact path="/new" component={AddUser} />
         <Route component={NotFound} />
       </Switch>
     </section>

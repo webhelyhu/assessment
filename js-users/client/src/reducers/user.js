@@ -41,7 +41,7 @@ export default function (state = initialState, action) {
         users: payload,
         loading: false
       };
-    case USER_ERROR:
+    case USER_ERROR:     // when user update/create returns error messages from server. see at actions/user
       return {
         ...state,
         error: payload,

@@ -118,11 +118,32 @@ export const updateUser = (
   } catch (err) {
     dispatch(setAlert(`Error updating user ${first_name}!`, 'danger'));
     console.log("Error updating user", err)
+
+    if (typeof err === 'object' && typeof err.response === 'object') {
+      // we got response error, we can get dispatch the error data
+      console.log("Sending details to reducer")
+      dispatch({
+        type: USER_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.status,
+          ...err.response.data
+        }
+      });
+    } else {
+      // we have no extra info from response object, but need to dispatch ERROR anyways.
+      dispatch({
+        type: USER_ERROR,
+        payload: { msg: JSON.stringify(err), status: "ERROR" }
+      })
+    }
   }
 };
 
 
-// Update user
+
+
+// Update only the status of the user
 export const updateUserStatus = (
   { id, status }
 ) => async dispatch => {
