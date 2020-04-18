@@ -64,10 +64,10 @@ export const getUsers = () => async dispatch => {
 
 // Get user by ID
 export const getUserById = userId => async dispatch => {
-  console.log('getUserById ', `${URL_BASE}/${userId}`)
+  // console.log('getUserById ', `${URL_BASE}/${userId}`)
   try {
     const res = await axios.get(`${URL_BASE}/${userId}`, headerConfig);
-    console.log('Loaded user', userId)
+    // console.log('Loaded user', userId)
     dispatch({
       type: GET_USER,
       payload: res.data
@@ -102,7 +102,7 @@ export const updateUser = (
 ) => async dispatch => {
   const { id, first_name, last_name, status } = formData
   const updateInfo = { first_name, last_name, status }
-  console.log("updateUser with", updateInfo)
+  // console.log("updateUser with", updateInfo)
   try {
     await axios.patch(`${URL_BASE}/${id}`, updateInfo, headerConfig);
     dispatch(setAlert(`User ${first_name} updated`, 'success'));

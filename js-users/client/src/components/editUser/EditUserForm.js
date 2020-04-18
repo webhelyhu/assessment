@@ -51,6 +51,11 @@ const EditUserForm = ({ updateUser, getUserById, updateFormUser, user: { user, l
                   value={user.last_name}
                   onChange={e => updateFormUser({ [e.target.name]: e.target.value })}
                 />
+                {error.last_name &&
+                  error.last_name.map(err => (
+                    <p key={1 + Math.random()} className="field-error">Error: {err}</p>
+                  ))
+                }
               </div>
               <div className='form-group'>
                 {/* <select

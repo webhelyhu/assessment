@@ -56,6 +56,11 @@ const AddUserForm = ({ createUser, history, user: { error } }) => {
             value={last_name}
             onChange={e => onChange(e)}
           />
+          {error.last_name &&
+            error.last_name.map(err => (
+              <p key={1 + Math.random()} className="field-error">Error: {err}</p>
+            ))
+          }
         </div>
         <input type='submit' className='btn btn-primary my-1' />
       </form>

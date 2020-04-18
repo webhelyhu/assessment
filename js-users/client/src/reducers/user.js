@@ -24,7 +24,7 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case GET_USER:            // payload is the user
-      console.log('Got user', payload.first_name)
+      // console.log('Got user', payload.first_name)
       return {
         ...state,
         user: payload,

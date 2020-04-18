@@ -10,7 +10,6 @@ import NotFound from '../layout/NotFound';
 const Routes = props => {
   return (
     <section className="container">
-      <Alert />
       <Switch>
         <Route exact path="/edit/:id" component={EditUser} />
         <Route exact path="/rawusers" component={Users} />
@@ -18,6 +17,7 @@ const Routes = props => {
         <Route exact path="/new" component={AddUser} />
         <Route component={NotFound} />
       </Switch>
+      <Alert />
     </section>
   );
 };
