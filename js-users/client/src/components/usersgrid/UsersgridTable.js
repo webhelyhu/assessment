@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useMemo, Link } from 'react';
+import React, { Fragment, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import UserItem from './UserItem';
@@ -7,6 +7,7 @@ import { useTable, usePagination, useGlobalFilter } from 'react-table'
 import { getUsers, updateUserStatus } from '../../actions/user'
 import matchSorter from 'match-sorter'   // react-table is using it for global filter
 
+import './UsersgridTable.css'
 
 // Define a default UI for filtering
 function GlobalFilter({
@@ -162,7 +163,7 @@ const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loadin
             />
 
             < table {...getTableProps()}>
-              <thead>
+              <thead className="egyes" className="kettes">
                 {headerGroups.map(headerGroup => (
                   <tr {...headerGroup.getHeaderGroupProps()}>
                     {headerGroup.headers.map(column => (
@@ -174,11 +175,14 @@ const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loadin
               <tbody {...getTableBodyProps()}>
                 {page.map(row => {
                   prepareRow(row)
+                  console.log(row)
                   return (
-                    <tr {...row.getRowProps()}>
-                      {row.cells.map(cell => {
-                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                      })}
+                    <tr {...row.getRowProps()} className={row.cells[3].value}>
+                      {
+                        row.cells.map(cell => {
+                          return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                        })
+                      }
                     </tr>
                   )
                 })}
@@ -218,7 +222,8 @@ const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loadin
               </span>
             </div>
           </Fragment>
-        )}
+        )
+      }
     </Fragment >
   )
 }
