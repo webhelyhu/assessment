@@ -12,7 +12,7 @@ router.get('/:userid', async (req, res) => {
   console.log("Getting ", `${URL_BASE}/users/${req.params.userid}`)
 
   try {
-    userData = await axios.get(`http://js-assessment-backend.herokuapp.com/users/1000`,
+    userData = await axios.get(`http://js-assessment-backend.herokuapp.com/users/${req.params.userid}`,
       {
         headers:
         {

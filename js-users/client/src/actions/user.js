@@ -122,6 +122,21 @@ export const updateUser = (
 };
 
 
+// Update user
+export const updateUserStatus = (
+  { id, status }
+) => async dispatch => {
+  console.log("updateUserStatus at user", id, " to status ", status)
+  try {
+    await axios.patch(`${URL_BASE}/${id}`, { status }, headerConfig);
+    // data has changed, reload needed
+    dispatch(getUsers());
+
+  } catch (err) {
+    dispatch(setAlert(`Error updating user ${id}!`, 'danger'));
+    console.log("Error updating user", err)
+  }
+};
 
 export const updateFormUser = (payload) =>
   async dispatch => {

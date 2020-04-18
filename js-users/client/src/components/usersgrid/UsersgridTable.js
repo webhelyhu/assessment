@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect, useMemo } from 'react';
+import React, { Fragment, useEffect, useMemo, Link } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import UserItem from './UserItem';
 import Spinner from '../layout/Spinner';
 import { useTable, usePagination, useGlobalFilter } from 'react-table'
-import { getUsers } from '../../actions/user'
+import { getUsers, updateUserStatus } from '../../actions/user'
 import matchSorter from 'match-sorter'   // react-table is using it for global filter
 
 
@@ -35,7 +35,7 @@ function GlobalFilter({
 }
 
 
-const UsersTable = function ({ getUsers, user: { users, loading } }) {
+const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loading } }) {
 
 
   const filterTypes = React.useMemo(
@@ -65,24 +65,26 @@ const UsersTable = function ({ getUsers, user: { users, loading } }) {
   // Let the table remove the filter if the string is empty
   fuzzyTextFilterFn.autoRemove = val => !val
 
+
   const FirstNameDisplay = (values) => {
-    // console.log('FirstNameDisplay', values)
+    // the user id is: values.values.row.original.id
+    const editLink = `/users/${values.values.row.original.id}`
+    // return '<a href="/users/' + values.values.row.original.id + '">' + values.values.cell.value + '</a>'
     return (
-      <>
-        {values.values.cell.value} (#{values.values.row.original.id})
-      </>
+      <a href={editLink}>
+        {values.values.cell.value}
+      </a>
     )
   }
 
-  const changeStatus = (id) => {
-    console.log("Changing status of id", id)
-  }
-
   const StatusDisplay = (values) => {
-    // 
+    // displaying icon instead of "active" and "locked"
+    const id = values.values.row.original.id
+    const currentStatus = values.values.cell.value
+    const newStatus = currentStatus === 'active' ? 'locked' : 'active'
     return (
-      <span onClick={() => changeStatus(values.values.row.original.id)}>
-        {(values.values.cell.value === 'active' ?
+      <span onClick={() => updateUserStatus({ id, status: newStatus })}>
+        {(currentStatus === 'active' ?
           (<img className="user-status" alt="active user" src="/user-check.png" />)
           : (<img className="user-status" alt="locked user" src="/user-denied.png" />))}
       </span>
@@ -233,5 +235,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getUsers }
+  { getUsers, updateUserStatus }
 )(UsersTable);
