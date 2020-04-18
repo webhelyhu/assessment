@@ -28,17 +28,20 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: payload,
+        error: {},
         loading: false
       };
     case UPDATE_USER:      // payload is only the id of the updated user!
       return {
         ...state,
+        error: {},
         loading: false
       };
     case GET_USERS:
       return {
         ...state,
         users: payload,
+        error: {},
         loading: false
       };
     case USER_ERROR:     // when user update/create returns error messages from server. see at actions/user
@@ -50,6 +53,7 @@ export default function (state = initialState, action) {
     case CLEAR_USERS:
       return {
         ...state,
+        error: {},
         users: [],
         loading: true
       };

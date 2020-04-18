@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { updateUser, getUserById, updateFormUser } from '../../actions/user';
 
-const EditUserForm = ({ updateUser, getUserById, updateFormUser, user: { user, loading }, history, match }) => {
+const EditUserForm = ({ updateUser, getUserById, updateFormUser, user: { user, loading, error }, history, match }) => {
 
   const nullUser = !user;
   useEffect(() => {
@@ -37,6 +37,11 @@ const EditUserForm = ({ updateUser, getUserById, updateFormUser, user: { user, l
                   onChange={e => updateFormUser({ [e.target.name]: e.target.value })}
                 // required
                 />
+                {error.first_name &&
+                  error.first_name.map(err => (
+                    <p key={1 + Math.random()} className="field-error">Error: {err}</p>
+                  ))
+                }
               </div>
               <div className='form-group'>
                 <input
@@ -76,8 +81,7 @@ EditUserForm.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
-  auth: state.auth
+  user: state.user
 });
 
 export default connect(

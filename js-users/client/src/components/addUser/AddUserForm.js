@@ -1,20 +1,19 @@
 import React, { Fragment, useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createUser } from '../../actions/user';
 
-const AddUserForm = ({ createUser, history }) => {
+const AddUserForm = ({ createUser, history, user: { error } }) => {
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
-    status: ''
+    status: 'active'
   });
 
   const {
     first_name,
-    last_name,
-    status
+    last_name
   } = formData;
 
   const onChange = e =>
@@ -41,8 +40,13 @@ const AddUserForm = ({ createUser, history }) => {
             name='first_name'
             value={first_name}
             onChange={e => onChange(e)}
-            required
           />
+          {error.first_name &&
+            error.first_name.map(err => (
+              <p key={1 + Math.random()} className="field-error">Error: {err}</p>
+            ))
+          }
+
         </div>
         <div className='form-group'>
           <input
@@ -51,23 +55,9 @@ const AddUserForm = ({ createUser, history }) => {
             name='last_name'
             value={last_name}
             onChange={e => onChange(e)}
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='* Status (active or locked)'
-            name='status'
-            value={status}
-            onChange={e => onChange(e)}
-            required
           />
         </div>
         <input type='submit' className='btn btn-primary my-1' />
-        <Link className='btn btn-light my-1' to='/'>
-          Homepage
-        </Link>
       </form>
     </Fragment>
   );
@@ -77,7 +67,11 @@ AddUserForm.propTypes = {
   createUser: PropTypes.func.isRequired
 };
 
+const mapStateToProps = (state) => ({
+  user: state.user
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { createUser }
 )(withRouter(AddUserForm));
