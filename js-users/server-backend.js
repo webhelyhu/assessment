@@ -77,9 +77,18 @@ router.post(
       res.status(201).send(newUserData.data);
 
     } catch (err) {
-      console.error(JSON.parse(JSON.stringify(err)));
-      res.status(500).send('Server Error ' + JSON.stringify(err));
+      console.error('Server Error: ' + err.message);
+
+      if (typeof err === 'object' && typeof err.response === 'object') {
+        // we got response error, we can use response
+        res.status(err.response.status).send(err.response.data);
+      } else {
+        // some other type of error.
+        res.status(500).send("Server error" + JSON.stringify(err));
+      }
+
     }
+
     console.log("Creating finished.")
   }
 );
@@ -110,8 +119,16 @@ router.patch(
       res.status(201).send(newUserData.data);
 
     } catch (err) {
-      console.error('Server Error ' + err.message);
-      res.status(422).send('Server Error ' + err.message);
+      console.error('Server Error: ' + err.message);
+
+      if (typeof err === 'object' && typeof err.response === 'object') {
+        // we got response error, we can use response
+        res.status(err.response.status).send(err.response.data);
+      } else {
+        // some other type of error.
+        res.status(500).send("Server error" + JSON.stringify(err));
+      }
+
     }
     console.log("Updating finished.")
   }

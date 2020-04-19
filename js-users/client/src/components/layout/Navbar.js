@@ -7,8 +7,8 @@ const Navbar = () => {
   return (
     <nav className='navbar bg-dark'>
       <h1>
-        <NavLink to='/'>
-          <i className='fas fa-users' /> DN Users
+        <NavLink to='/' className="navbar-logo-link">
+          <img src="/favicon-32x32.png" className="navbar-logo" alt="Pumpkin logo" /> PUMA
         </NavLink>
       </h1>
       <ul>
@@ -16,10 +16,7 @@ const Navbar = () => {
           <NavLink activeClassName="activepagelink" to='/users'>Users</NavLink>
         </li>
         <li>
-          <NavLink activeClassName="activepagelink" to='/rawusers'>Raw(users)</NavLink>
-        </li>
-        <li>
-          <NavLink activeClassName="activepagelink" to='/new'>Add User</NavLink>
+          <NavLink activeClassName="activepagelink" to='/new'>New User</NavLink>
         </li>
       </ul>
     </nav>

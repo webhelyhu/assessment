@@ -1,8 +1,10 @@
 import axios from 'axios';
 import { setAlert } from './alert';
+import naplo from '../utils/naplo'
 
 import {
   GET_USER,
+  CLEAR_USER,
   GET_USERS,
   USER_ERROR,
   UPDATE_USER,
@@ -48,6 +50,7 @@ const handleAxiosError = (dispatch, err = {}, message) => {
 
 // Get all users
 export const getUsers = () => async dispatch => {
+  naplo("getUsers starts")
   dispatch({ type: CLEAR_USERS });
 
   try {
@@ -57,22 +60,31 @@ export const getUsers = () => async dispatch => {
       payload: res.data
     });
   } catch (err) {
-    console.log("Error getting users")
+    naplo("Error getting users")
     handleAxiosError(dispatch, err)
   }
 };
 
 // Get user by ID
 export const getUserById = userId => async dispatch => {
-  // console.log('getUserById ', `${URL_BASE}/${userId}`)
+  naplo("getUserById starts, parameter:", userId)
+  // naplo('getUserById ', `${URL_BASE}/${userId}`)
+
+  if (!userId) {
+    naplo("...assuming new user creation")
+    dispatch({ type: CLEAR_USER });
+    return
+  }
+
   try {
     const res = await axios.get(`${URL_BASE}/${userId}`, headerConfig);
-    // console.log('Loaded user', userId)
+    naplo('Loaded user', userId)
     dispatch({
       type: GET_USER,
       payload: res.data
     });
   } catch (err) {
+    naplo('User not loaded')
     dispatch({
       type: USER_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -87,9 +99,18 @@ export const createUser = (
   history
 ) => async dispatch => {
   try {
-    await axios.post(`${URL_BASE}`, formData, headerConfig);
+    const answer = await axios.post(`${URL_BASE}`, formData, headerConfig);
     dispatch(setAlert(`User ${formData.first_name} Created`, 'success'));
-    // history.push('/');    // where to go after creating user?
+    naplo("newuser returned:", answer.data.id)
+    //
+    // what to do after creating new user? stay and clear form or jump to table?
+    //
+    history.push(`/edit/${answer.data.id}`);
+    //
+    // dispatch({
+    //   type: GET_USER,
+    //   payload: answer.data
+    // });
   } catch (err) {
     handleAxiosError(dispatch, err, 'Error creating user')
   }
@@ -102,7 +123,7 @@ export const updateUser = (
 ) => async dispatch => {
   const { id, first_name, last_name, status } = formData
   const updateInfo = { first_name, last_name, status }
-  // console.log("updateUser with", updateInfo)
+  // naplo("updateUser with", updateInfo)
   try {
     await axios.patch(`${URL_BASE}/${id}`, updateInfo, headerConfig);
     dispatch(setAlert(`User ${first_name} updated`, 'success'));
@@ -117,11 +138,11 @@ export const updateUser = (
 };
 
 // dispatch(setAlert(`Error updating user ${first_name}!`, 'danger'));
-// console.log("Error updating user", err)
+// naplo("Error updating user", err)
 
 // if (typeof err === 'object' && typeof err.response === 'object') {
 //   // we got response error, we can get dispatch the error data
-//   console.log("Sending details to reducer")
+//   naplo("Sending details to reducer")
 //   dispatch({
 //     type: USER_ERROR,
 //     payload: {
@@ -150,7 +171,7 @@ export const updateUser = (
 export const updateUserStatus = (
   { id, status }
 ) => async dispatch => {
-  console.log("updateUserStatus at user", id, " to status ", status)
+  naplo("updateUserStatus at user", id, " to status ", status)
   try {
     await axios.patch(`${URL_BASE}/${id}`, { status }, headerConfig);
     // data has changed, reload needed
@@ -158,7 +179,7 @@ export const updateUserStatus = (
 
   } catch (err) {
     dispatch(setAlert(`Error updating user ${id}!`, 'danger'));
-    console.log("Error updating user", err)
+    naplo("Error updating user", err)
   }
 };
 

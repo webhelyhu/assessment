@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import EditUserForm from './EditUserForm'
 
 const EditUser = ({ match }) => {
   return (
-    <Fragment>
+    <section className="edit-user">
       <h1 className='large text-primary'>Edit user</h1>
       <p className='lead'>
         Edit existing user's data
@@ -12,7 +12,7 @@ const EditUser = ({ match }) => {
       <div className='profiles'>
         <EditUserForm id={match.params.id} />
       </div>
-    </Fragment>
+    </section>
   );
 };
 

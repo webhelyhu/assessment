@@ -1,20 +1,18 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Alert from '../layout/Alert';
-import Users from '../users/Users';
 import Usersgrid from '../usersgrid/Usersgrid';
-import AddUser from '../addUser/AddUser'
 import EditUser from '../editUser/EditUser'
+import EditNewUser from '../editUser/EditNewUser'
 import NotFound from '../layout/NotFound';
-
 const Routes = props => {
   return (
     <section className="container">
       <Switch>
         <Route exact path="/edit/:id" component={EditUser} />
-        <Route exact path="/rawusers" component={Users} />
+        <Route exact path="/edit/" component={EditNewUser} />
+        <Route exact path="/new/" component={EditNewUser} />
         <Route exact path="/users" component={Usersgrid} />
-        <Route exact path="/new" component={AddUser} />
         <Route component={NotFound} />
       </Switch>
       <Alert />
