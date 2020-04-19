@@ -1,6 +1,6 @@
 # Notes
 
-I am a bit sad that the designer disappeared. I am not a designer, I was thinking
+I am quite sad that the designer disappeared. I am not a designer, I was thinking
 about something awesome... Well, I only had this pumpkin thing...
 
 ## Server side
