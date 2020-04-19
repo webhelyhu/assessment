@@ -22,15 +22,12 @@ function GlobalFilter({
     <span className="global-filter">
       Filter the table:{' '}
       <input
+        className="global-filter-input"
         value={globalFilter || ''}
         onChange={e => {
           setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
         }}
         placeholder={`${count} records...`}
-        style={{
-          fontSize: '1.1rem',
-          border: '0',
-        }}
       />
     </span>
   )

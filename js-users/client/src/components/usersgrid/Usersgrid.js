@@ -3,9 +3,10 @@ import React from 'react';
 // import { connect } from 'react-redux';
 // import Spinner from '../layout/Spinner';
 import UsersTable from './UsersgridTable'
+import naplo from '../../utils/naplo'
 
 const Usersgrid = () => {
-  console.log('Usersgrid returning.')
+  naplo('Usersgrid returning.')
   return (
     <div className="show-users">
       <div>

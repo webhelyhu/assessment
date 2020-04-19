@@ -8,8 +8,7 @@ import {
   UPDATE_FORM_USER
 } from '../actions/types';
 
-
-const naplo = (...props) => console.log(...props)
+import naplo from '../utils/naplo'
 
 const initialState = {
   user: {
@@ -36,7 +35,7 @@ export default function (state = initialState, action) {
         loadingUser: false,
       };
     case CLEAR_USER:          // clearing user data, prepare for add new user.
-      console.log("reducer: CLEAR_USER", initialState.user)
+      naplo("reducer: CLEAR_USER", initialState.user)
       return {
         ...state,
         user: {

@@ -33,6 +33,11 @@
   border-radius: 5px;
 }
 
+.global-filter-input {
+  background: white;
+  font-size: 1em;
+}
+
 .data-status {
   text-align: center;
 }
@@ -115,4 +120,9 @@ table.greenTable tfoot .links a {
   color: #fa7c01;
   padding: 2px 8px;
   border-radius: 5px;
+}
+
+.pagination button {
+  border-radius: 3px;
+  background: #fad6b2;
 }
