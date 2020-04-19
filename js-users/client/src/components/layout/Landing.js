@@ -1,20 +1,14 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-const Landing = ({ isAuthenticated }) => {
-  if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
-  }
-
+const Landing = () => {
   return (
     <section className='landing'>
       <div className='dark-overlay'>
         <div className='landing-inner'>
-          <h1 className='x-large'>P U M A</h1>
+          <h1 className='x-large'>Pumpkin</h1>
           <p className='lead'>
-            Pumpkin - the User Management Accelerator
+            the User Management Accelerator
           </p>
           <div className='buttons'>
             <Link to='/users' className='btn btn-primary'>
@@ -30,12 +24,4 @@ const Landing = ({ isAuthenticated }) => {
   );
 };
 
-Landing.propTypes = {
-  isAuthenticated: PropTypes.bool
-};
-
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps)(Landing);
+export default Landing;

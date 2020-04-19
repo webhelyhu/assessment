@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 // import PropTypes from 'prop-types';
 // import { connect } from 'react-redux';
 // import Spinner from '../layout/Spinner';
@@ -7,7 +7,7 @@ import UsersTable from './UsersgridTable'
 const Usersgrid = () => {
   console.log('Usersgrid returning.')
   return (
-    <Fragment>
+    <div className="show-users">
       <div>
         <h1 className='large text-primary'>Users</h1>
         <p className='lead'>
@@ -17,7 +17,7 @@ const Usersgrid = () => {
           <UsersTable />
         </div>
       </div>
-    </Fragment>
+    </div>
   );
 };
 

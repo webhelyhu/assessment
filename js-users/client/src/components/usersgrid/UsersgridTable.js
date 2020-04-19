@@ -174,7 +174,7 @@ const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loadin
               setGlobalFilter={setGlobalFilter}
             />
 
-            <table {...getTableProps()} id="main-table">
+            <table {...getTableProps()} id="main-table" className="greenTable">
               <thead>
                 {headerGroups.map(headerGroup => (
                   <tr {...headerGroup.getHeaderGroupProps()}>
@@ -208,40 +208,46 @@ const UsersTable = function ({ getUsers, updateUserStatus, user: { users, loadin
                   )
                 })}
               </tbody>
-            </table>
 
-            <div className="pagination">
-              <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                {'<<'}
-              </button>{' '}
-              <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                {'<'}
-              </button>{' '}
-              <button onClick={() => nextPage()} disabled={!canNextPage}>
-                {'>'}
-              </button>{' '}
-              <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                {'>>'}
-              </button>{' '}
-              <span>
-                Page{' '}
-                <strong>
-                  {pageIndex + 1} of {pageOptions.length}
-                </strong>{' '}
-              </span>
-              <span>
-                | Go to page:{' '}
-                <input
-                  type="number"
-                  defaultValue={pageIndex + 1}
-                  onChange={e => {
-                    const page = e.target.value ? Number(e.target.value) - 1 : 0
-                    gotoPage(page)
-                  }}
-                  style={{ width: '100px' }}
-                />
-              </span>
-            </div>
+              <tfoot>
+                <tr>
+                  <td colSpan="4">
+                    <div className="pagination">
+                      <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+                        {'<<'}
+                      </button>{' '}
+                      <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+                        {'<'}
+                      </button>{' '}
+                      <button onClick={() => nextPage()} disabled={!canNextPage}>
+                        {'>'}
+                      </button>{' '}
+                      <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+                        {'>>'}
+                      </button>{' '}
+                      <span>
+                        Page{' '}
+                        <strong>
+                          {pageIndex + 1} of {pageOptions.length}
+                        </strong>{' '}
+                      </span>
+                      <span>
+                        | Go to page:{' '}
+                        <input
+                          type="number"
+                          defaultValue={pageIndex + 1}
+                          onChange={e => {
+                            const page = e.target.value ? Number(e.target.value) - 1 : 0
+                            gotoPage(page)
+                          }}
+                          style={{ width: '100px' }}
+                        />
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
           </div>
         )
       }

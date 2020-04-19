@@ -8,7 +8,7 @@ const Navbar = () => {
     <nav className='navbar bg-dark'>
       <h1>
         <NavLink to='/' className="navbar-logo-link">
-          <img src="/favicon-32x32.png" className="navbar-logo" alt="Pumpkin logo" /> PUMA
+          <img src="/favicon-32x32.png" className="navbar-logo" alt="Pumpkin logo" /> Pumpkin
         </NavLink>
       </h1>
       <ul>

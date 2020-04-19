@@ -24,7 +24,6 @@ const EditUserForm = ({ updateUser, createUser, getUserById, updateFormUser, use
         <Spinner />
       ) : (
           <Fragment>
-            <small>* = required field</small>
             <form
               className='form'
               onSubmit={e => {
@@ -32,10 +31,13 @@ const EditUserForm = ({ updateUser, createUser, getUserById, updateFormUser, use
                 user.id ? updateUser(user, history) : createUser(user, history);
               }}
             >
+              <i><small>* = required field</small></i>
               <div className='form-group'>
+                <label htmlFor="formfirstname">* First Name</label>
                 <input
                   type='text'
-                  placeholder='* First Name'
+                  placeholder='Enter First Name'
+                  id="formfirstname"
                   name='first_name'
                   value={user.first_name}
                   onChange={e => updateFormUser({ [e.target.name]: e.target.value })}
@@ -48,9 +50,11 @@ const EditUserForm = ({ updateUser, createUser, getUserById, updateFormUser, use
                 }
               </div>
               <div className='form-group'>
+                <label htmlFor="formlastname">* Last Name</label>
                 <input
                   type='text'
-                  placeholder='* Last Name'
+                  id="formlastname"
+                  placeholder='Enter Last Name'
                   name='last_name'
                   value={user.last_name}
                   onChange={e => updateFormUser({ [e.target.name]: e.target.value })}

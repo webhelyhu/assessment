@@ -7,6 +7,8 @@
 - new user commit -> jump to the /edit/:newuserid page for more edit of the current user?
 - (could be: emty new user form to be able to add next new user.)
 - (could be: jump to users, to the new user to see.)
+- the users table is sorted by id when arrives. User can sort with a click on the table heads.
+- (would be nice to remember the user, and jump back to that page at the users.)
 
 # Notes
 

@@ -58,7 +58,7 @@ export default function (state = initialState, action) {
       naplo('reducer: GET_USERS lines:', payload.length)
       return {
         ...state,
-        users: payload,
+        users: payload.sort((a, b) => a.id < b.id ? -1 : 1),
         error: {},
         loading: false
       };

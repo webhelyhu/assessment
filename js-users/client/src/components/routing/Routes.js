@@ -7,7 +7,7 @@ import EditNewUser from '../editUser/EditNewUser'
 import NotFound from '../layout/NotFound';
 const Routes = props => {
   return (
-    <section className="container">
+    <section className="container-new">
       <Switch>
         <Route exact path="/edit/:id" component={EditUser} />
         <Route exact path="/edit/" component={EditNewUser} />
