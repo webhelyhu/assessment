@@ -1,8 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import './Navbar.css'
-
 const Navbar = () => {
   return (
     <nav className='navbar bg-dark'>
@@ -13,10 +11,13 @@ const Navbar = () => {
       </h1>
       <ul>
         <li>
-          <NavLink activeClassName="activepagelink" to='/users'>Users</NavLink>
+          <NavLink activeClassName="navbar-activepagelink" to='/users'>Users</NavLink>
         </li>
         <li>
-          <NavLink activeClassName="activepagelink" to='/new'>New User</NavLink>
+          <NavLink activeClassName="navbar-activepagelink" to='/new'>New User</NavLink>
+        </li>
+        <li>
+          <NavLink activeClassName="navbar-activepagelink" to='/multi'>Multi</NavLink>
         </li>
       </ul>
     </nav>

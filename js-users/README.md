@@ -1,46 +1,49 @@
-#
-
-# TODO
-
-#
-
-- new user commit -> jump to the /edit/:newuserid page for more edit of the current user?
-- (could be: emty new user form to be able to add next new user.)
-- (could be: jump to users, to the new user to see.)
-- the users table is sorted by id when arrives. User can sort with a click on the table heads.
-- (would be nice to remember the user, and jump back to that page at the users.)
-
 # Notes
 
+I am a bit sad that the designer disappeared. I am not a designer, I was thinking
+about something awesome... Well, I only had this pumpkin thing...
+
+## Server side
+
+There is a simple proxy server set up because of the CORS. I also had to play with
+Postman a little, to figure out how things work. This is why I do not use express'
+proxy, rather defining the routes myself.
+
+## Just an idea: Multi
+
+I know the assessment spoke about separate pages... but... I think it would be nice
+to have both functionalities in one page. Well, I created a "Multi" page, but it
+is not ready. It just shows the idea. It would take some more time to
+
+- the editor is hidden by default (only the NEW button shows)
+- if you click on a row (first name), the editor opens, with the clicked user.
+
+Also, there is an alternative way to show the editor window (same width than the users
+and also responsive)
+
+## Lots of "what to do, when...?" questions
+
+- After a new user is commited, shall we stay at the new user form or go back to the
+  users list? I picked a third method: jump to editing the user
+
+- what to do when somebody calls /edit without userid? I assume he/she wants to create
+  a new user.
+
+- What shall be the sorting of the users list? The unordered list is jumping around,
+  so I decided to sort the table by userid (even if it is not shown as asked). You can
+  sort the table by clicking on the header
+
+- etc.
+
+## Notes about the code, coding
+
 - normal html check ("required") is turned off, to be able to check server-side messages.
-- also removed status dropdown from user edit page (assessment says: only the two texfields)
-- there were no info how long the error message should be visible. Lets say, until next submit.
-- the edit and the add user form is two separated codes. It is not nice. Sorry for that.
+- also commented out status dropdown from user edit page (assessment says: only the two texfields)
 - no info about default user status. Assuming 'active'.
-- there were no request for deleting the user. Not implementing.
+- there were no request for deleting the user. Not implementing. (working in Postman)
 - TEST CASES: I had no time to create test environment, sorry for that.
-- concurrent editing, data table caching: If there would be more time, I loved to create a
-  layer between axios and the store, so I could check if data had been changed, update only
-  if necessary etc.
+- To save time, I cloned an another project (it is from Brad Traversy, from an Udemy course),
+  and started to work with that. Well, he used a global App.css (well, for a small project it
+  is okay, but...), and lots of other things may just hang around unused in the files. Sorry for that.
 
-## Starting from a clone of an another project
-
-To save time, I copied an another project (it is from Brad Traversy, from an Udemy course).
-I spent some time without commiting, so far I:
-
-- spent some time testing the Api with Postman
-- spent some time checking different pagers/tables/grids, which one to use.
-- created a new page: /users
-- created the user reducer (the base project is using redux, I just leave it as it is.)
-- because of CORS, created a server-side api route, to use it as a proxy.
-  (I created individual routes in the backend, for testing purposes)
-- /users now can get userlist thru axios->backend->heroku and present all users on one page.
-
-## todos
-
-### design
-
-Whahh. What design. Would be nice to have a pull-down edit box on the same page as the table.
-This way it could be a real functional one-page-app.
--- css, scss or inline?
--- mobile friendly
+Thanks!

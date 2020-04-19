@@ -4,12 +4,15 @@ const router = express.Router();
 
 const URL_BASE = 'http://js-assessment-backend.herokuapp.com';
 
+// const naplo = (...props) => console.log(...props)
+const naplo = () => { }
+
 // @route    GET api/backend/:id
 // @desc     Get all the users from the js-backend
 // @access   Public
 router.get('/:userid', async (req, res) => {
   let userData;
-  console.log("Getting ", `${URL_BASE}/users/${req.params.userid}`)
+  naplo("Getting ", `${URL_BASE}/users/${req.params.userid}`)
 
   try {
     userData = await axios.get(`http://js-assessment-backend.herokuapp.com/users/${req.params.userid}`,
@@ -35,7 +38,7 @@ router.get('/:userid', async (req, res) => {
 router.get('/', async (req, res) => {
 
   let userlist;
-  console.log("Getting userlist")
+  naplo("Getting userlist")
 
   try {
     userlist = await axios.get(`${URL_BASE}/users.json`);
@@ -43,9 +46,9 @@ router.get('/', async (req, res) => {
     console.error("Error with backend:", err.message);
     res.status(500).send('Server Error ' + JSON.stringify(err));
   }
-  console.log(userlist.data.length)
+  naplo(userlist.data.length)
   // const answer = JSON.parse(userlist.data)
-  // console.log("sending", answer.length, "rows.")
+  // naplo("sending", answer.length, "rows.")
   res.status(200).send(userlist.data)
 });
 
@@ -60,8 +63,8 @@ router.post(
   async (req, res) => {
 
     let newUserData;
-    console.log("Creating new user")
-    console.log(req.body)
+    naplo("Creating new user")
+    naplo(req.body)
     const body = req.body;
     const config = {
       headers:
@@ -73,7 +76,7 @@ router.post(
 
     try {
       newUserData = await axios.post(`${URL_BASE}/users.json`, body, config);
-      console.log(newUserData.data)
+      naplo(newUserData.data)
       res.status(201).send(newUserData.data);
 
     } catch (err) {
@@ -89,7 +92,7 @@ router.post(
 
     }
 
-    console.log("Creating finished.")
+    naplo("Creating finished.")
   }
 );
 
@@ -103,7 +106,7 @@ router.patch(
   async (req, res) => {
 
     let newUserData;
-    // console.log("Patching ", `${URL_BASE}/users/${req.params.userid}`)
+    // naplo("Patching ", `${URL_BASE}/users/${req.params.userid}`)
     const body = req.body;
     const config = {
       headers:
@@ -115,7 +118,7 @@ router.patch(
 
     try {
       newUserData = await axios.patch(`${URL_BASE}/users/${req.params.userid}`, body, config);
-      console.log("Done updating. Answer: ", newUserData.data)
+      naplo("Done updating. Answer: ", newUserData.data)
       res.status(201).send(newUserData.data);
 
     } catch (err) {
@@ -130,7 +133,7 @@ router.patch(
       }
 
     }
-    console.log("Updating finished.")
+    naplo("Updating finished.")
   }
 );
 

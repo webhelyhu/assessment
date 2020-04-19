@@ -25,15 +25,19 @@ const EditUserForm = ({ updateUser, createUser, getUserById, updateFormUser, use
       ) : (
           <Fragment>
             <form
-              className='form'
+              className='form grid-main'
               onSubmit={e => {
                 e.preventDefault();
                 user.id ? updateUser(user, history) : createUser(user, history);
               }}
             >
-              <i><small>* = required field</small></i>
-              <div className='form-group'>
+              <div className='form-group grid-elem'>
                 <label htmlFor="formfirstname">* First Name</label>
+                {error.first_name &&
+                  error.first_name.map(err => (
+                    <p key={1 + Math.random()} className="field-error">Error: {err}</p>
+                  ))
+                }
                 <input
                   type='text'
                   placeholder='Enter First Name'
@@ -43,14 +47,14 @@ const EditUserForm = ({ updateUser, createUser, getUserById, updateFormUser, use
                   onChange={e => updateFormUser({ [e.target.name]: e.target.value })}
                 // required
                 />
-                {error.first_name &&
-                  error.first_name.map(err => (
+              </div>
+              <div className='form-group grid-elem'>
+                <label htmlFor="formlastname">* Last Name</label>
+                {error.last_name &&
+                  error.last_name.map(err => (
                     <p key={1 + Math.random()} className="field-error">Error: {err}</p>
                   ))
                 }
-              </div>
-              <div className='form-group'>
-                <label htmlFor="formlastname">* Last Name</label>
                 <input
                   type='text'
                   id="formlastname"
@@ -59,27 +63,25 @@ const EditUserForm = ({ updateUser, createUser, getUserById, updateFormUser, use
                   value={user.last_name}
                   onChange={e => updateFormUser({ [e.target.name]: e.target.value })}
                 />
-                {error.last_name &&
-                  error.last_name.map(err => (
-                    <p key={1 + Math.random()} className="field-error">Error: {err}</p>
-                  ))
-                }
               </div>
-              <div className='form-group'>
-                {/* <select
-                  name="status"
-                  id="select-status"
-                  value={user.status}
-                  onChange={e => updateFormUser({ [e.target.name]: e.target.value })}
+              {/* <div className='form-group'>
+                <select
+                name="status"
+                id="select-status"
+                value={user.status}
+                onChange={e => updateFormUser({ [e.target.name]: e.target.value })}
                 >
-                  <option value="active">Active</option>
-                  <option value="locked">Locked</option>
-                </select> */}
+                <option value="active">Active</option>
+                <option value="locked">Locked</option>
+                </select>
+              </div> */}
+              <div className="form-bottom grid-elem">
+                <i><small>* = required field</small></i><br />
+                <input type='submit' value="Submit" readOnly className='btn btn-primary my-1 mleft' />
+                <Link className='btn btn-light my-1 mleft' to='/users'>
+                  Users
+                </Link>
               </div>
-              <input type='submit' value="Submit" readOnly className='btn btn-primary my-1' />
-              <Link className='btn btn-light my-1' to='/users'>
-                Users
-        </Link>
             </form>
           </Fragment>
         )}

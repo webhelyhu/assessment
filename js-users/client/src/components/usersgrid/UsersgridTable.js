@@ -8,8 +8,6 @@ import { getUsers, updateUserStatus } from '../../actions/user'
 import matchSorter from 'match-sorter'   // react-table is using it for global filter
 import moment from 'moment'
 
-import './UsersgridTable.css'
-
 // Define a default UI for filtering
 function GlobalFilter({
   preGlobalFilteredRows,
